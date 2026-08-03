@@ -1,0 +1,11 @@
+---
+- hosts: linux
+  user: sysadmin
+  become: true
+
+  tasks:
+    - name: Instalar htop
+      ansible.builtin.package:
+        name: htop
+        state: present
+...
