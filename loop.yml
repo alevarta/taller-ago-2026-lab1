@@ -1,0 +1,28 @@
+---
+- hosts: linux
+  user: sysadmin
+  #become: true
+  gather_facts: false
+
+  tasks:
+    - name: Copiar archivos usando loop
+      ansible.builtin.copy:
+        src: 'index-{{ item.src }}.html'
+        dest: '/tmp/mi_carpeta2/index-{{ item.dest }}.html'
+      loop:
+        - { src: a, dest: A }
+        - { src: b, dest: B }
+        - { src: c, dest: C }
+
+    - name: Copiar archivos usando loop 2
+      ansible.builtin.copy:
+        src: 'index-base.html'
+        dest: '/tmp/mi_carpeta2/index-{{ item.dest }}.html'
+        mode: '0664'
+      loop:
+        - { dest: 1 }
+        - { dest: 2 }
+        - { dest: 3 }
+
+
+...
