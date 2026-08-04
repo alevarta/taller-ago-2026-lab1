@@ -1,0 +1,22 @@
+---
+- hosts: linux
+  user: sysadmin
+  #become: true
+  gather_facts: false
+
+  tasks:
+    - name: Crear Carpeta mi_carpeta
+      ansible.builtin.file:
+        path: /tmp/mi_carpeta2
+        state: directory
+
+    - name: Copiar archivo a carpeta remota
+      ansible.builtin.copy:
+        src: index-base.html
+        dest: /tmp/mi_carpeta2/index.html
+
+    - name: Generar archivo con contenido
+      ansible.builtin.copy:
+        content: "Este es un contenido de archivo\nde 2 lineas"
+        dest: /tmp/mi_carpeta2/cointenido.html
+...
