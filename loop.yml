@@ -9,6 +9,7 @@
       ansible.builtin.copy:
         src: 'index-{{ item.src }}.html'
         dest: '/tmp/mi_carpeta2/index-{{ item.dest }}.html'
+        mode: '0664'
       loop:
         - { src: a, dest: A }
         - { src: b, dest: B }
