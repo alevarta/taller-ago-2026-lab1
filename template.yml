@@ -1,0 +1,13 @@
+---
+- hosts: linux
+  user: sysadmin
+  #become: true
+  #gather_facts: false
+
+  tasks:
+    - name: Genero archivo desde template
+      ansible.builtin.template: 
+        src: templates/bienvenida-dinamico.txt.j2
+        dest: /tmp/bienvenida.txt
+
+...
