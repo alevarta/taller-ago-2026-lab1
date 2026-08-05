@@ -1,0 +1,35 @@
+---
+- hosts: linux
+  user: sysadmin
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Asegurar SSH sin acceso por password
+      ansible.builtin.lineinfile: 
+        path: /etc/ssh/sshd_config 
+        regexp: '^#PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+        state: present
+        backup: yes
+        validate: '/usr/sbin/sshd -t -f %s'
+      notify: Reiniciar servicio SSH
+
+    - name: Deshabilitar el inicio de sesión de root por SSH
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+        state: present
+        backup: yes  # Crea una copia de seguridad antes de modificar
+        validate: '/usr/sbin/sshd -t -f %s'
+      notify: Reiniciar servicio SSH  # Llama al handler si hay cambios
+
+
+  handlers:
+    - name: Reiniciar servicio SSH
+      ansible.builtin.service:
+        name: sshd  
+        state: restarted
+
+...
